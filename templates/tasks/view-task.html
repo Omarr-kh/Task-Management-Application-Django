@@ -51,7 +51,7 @@
     <p class="not-completed">Status: Not Completed</p>
     {% endif %}
     <div class="btn-div">
-      <a href="" class="button">Update Task</a>
+      <a href="{% url 'update-task' task.id %}" class="button">Update Task</a>
       <a href="{% url 'delete-task' task.id %}" class="button">Delete Task</a>
     </div>
   </body>
