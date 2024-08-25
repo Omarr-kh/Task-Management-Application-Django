@@ -16,11 +16,11 @@ def home(request):
 
     # Filter tasks based on the status
     if status_filter == 'completed':
-        tasks = Task.objects.filter(status=True)
+        tasks = Task.objects.filter(user=user, status=True)
     elif status_filter == 'not_completed':
-        tasks = Task.objects.filter(status=False)
+        tasks = Task.objects.filter(user=user, status=False)
     else:
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(user=user)
 
     # pagination with maximum of 5 tasks per page
     paginator = Paginator(tasks, 5)
