@@ -37,6 +37,16 @@
     <header>
       <h1 class="header">All Tasks</h1>
     </header>
+
+    <form method="get" action="">
+        <label for="status">Filter by status:</label>
+        <select name="status" id="status" onchange="this.form.submit()">
+            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Tasks</option>
+            <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="not_completed" {% if status_filter == 'not_completed' %}selected{% endif %}>Not Completed</option>
+        </select>
+    </form>
+
     <div>
       <br><hr>
       {% for task in tasks %}
@@ -51,8 +61,8 @@
     <div class="pagination">
         <span class="step-links">
             {% if tasks.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a href="?page=1&status={{ status_filter }}">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}">previous</a>
             {% endif %}
             
             <span class="current">
@@ -60,8 +70,8 @@
             </span>
             
             {% if tasks.has_next %}
-                <a href="?page={{ tasks.next_page_number }}">next</a>
-                <a href="?page={{ tasks.paginator.num_pages }}">last &raquo;</a>
+                <a href="?page={{ tasks.next_page_number }}&status={{ status_filter }}">next</a>
+                <a href="?page={{ tasks.paginator.num_pages }}&status={{ status_filter }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>

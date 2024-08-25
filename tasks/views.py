@@ -11,7 +11,16 @@ def home(request):
     """ View to show all tasks using pagination (5 per page) """
 
     user = User.objects.last()
-    tasks = Task.objects.filter(user=user)
+
+    status_filter = request.GET.get('status', 'all')
+
+    # Filter tasks based on the status
+    if status_filter == 'completed':
+        tasks = Task.objects.filter(status=True)
+    elif status_filter == 'not_completed':
+        tasks = Task.objects.filter(status=False)
+    else:
+        tasks = Task.objects.all()
 
     # pagination with maximum of 5 tasks per page
     paginator = Paginator(tasks, 5)
@@ -20,7 +29,8 @@ def home(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        "tasks": page_obj
+        "tasks": page_obj,
+        'status_filter': status_filter,
     }
 
     # render a certain page
