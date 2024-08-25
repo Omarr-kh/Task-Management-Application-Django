@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task {{ task.id }}</title>
+    <style>
+      .header {
+        text-align: center;
+      }
+      .completed {
+        color: green;
+        font-weight: bold;
+      }
+      .not-completed {
+        color: red;
+        font-weight: bold;
+      }
+      .task_title {
+        font-size: 22px;
+      }
+      .button {
+        padding: 10px 20px;
+        font-weight: bold;
+        color: #fff;
+        background-color: black;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+      .btn-div {
+        margin-top: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 class="header">Task Details</h2>
+    <br />
+    <hr />
+    <p class="task_title"><strong>Title:</strong> {{ task.title }}</p>
+    <p><strong>Description:</strong> {{ task.description }}</p>
+
+    {% if task.status %}
+    <p class="completed">Status: Completed</p>
+    {% else %}
+    <p class="not-completed">Status: Not Completed</p>
+    {% endif %}
+    <div class="btn-div">
+      <a href="" class="button">Update Task</a>
+      <a href="{% url 'delete-task' task.id %}" class="button">Delete Task</a>
+    </div>
+  </body>
+</html>
