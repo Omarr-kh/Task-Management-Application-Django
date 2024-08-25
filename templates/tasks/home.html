@@ -11,6 +11,26 @@
       .task_title {
         font-size: 22px;
       }
+      .button {
+        padding: 6px 14px;
+        font-weight: bold;
+        font-size: 12px;
+        color: #fff;
+        background-color: darkblue;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button-add {
+        font-size: 16px;
+        background-color: black;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   <body>
@@ -22,13 +42,15 @@
       {% for task in tasks %}
       <p class="task_title"><strong>Title:</strong> {{ task.title }}</p>
       <!-- <p>{{ task.description }}</p> -->
-      <a href="{% url 'view-task' task.id %}">View Task</a>
+      <a href="{% url 'view-task' task.id %}" class="button">View Task</a>
+      <a href="{% url 'update-task' task.id %}" class="button">Update Task</a>
+      <a href="{% url 'delete-task' task.id %}" class="button">Delete Task</a>
       <br><br><hr>
       {% endfor %}
     </div>
     <div>
       <br><br>
-      <a href="{% url 'add-task' %}">Add New Task</a>
+      <a href="{% url 'add-task' %}" class="button button-add">Add New Task</a>
     </div>
   </body>
 </html>
