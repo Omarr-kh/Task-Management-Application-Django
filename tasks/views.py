@@ -28,3 +28,16 @@ def add_task(request):
         )
         return redirect('home')
     return render(request, 'add-task.html')
+
+def view_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    context = {
+        "task": task
+    }
+    return render(request, 'view-task.html', context)
+
+def delete_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+
+    return redirect('home')
