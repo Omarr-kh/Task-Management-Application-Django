@@ -4,6 +4,8 @@ from .models import Task
 from django.contrib.auth.models import User
 
 # Create your views here.
+
+
 def home(request):
     user = User.objects.last()
     tasks = Task.objects.filter(user=user)
@@ -11,6 +13,7 @@ def home(request):
         "tasks": tasks
     }
     return render(request, 'home.html', context)
+
 
 def add_task(request):
     if request.method == "POST":
@@ -29,12 +32,32 @@ def add_task(request):
         return redirect('home')
     return render(request, 'add-task.html')
 
+
 def view_task(request, task_id):
     task = Task.objects.get(id=task_id)
     context = {
         "task": task
     }
     return render(request, 'view-task.html', context)
+
+
+def update_task(request, task_id):
+    # retrieve the task by id
+    task = Task.objects.get(id=task_id)
+    context = {
+        "task": task
+    }
+
+    if request.method == "POST":
+        # update the task and save it
+        task.title = request.POST.get('title')
+        task.description = request.POST.get('description')
+        task.status = request.POST.get('is_completed') == 'on'
+        task.save()
+
+        return redirect('home')
+    return render(request, 'update-task.html', context)
+
 
 def delete_task(request, task_id):
     task = Task.objects.get(id=task_id)
