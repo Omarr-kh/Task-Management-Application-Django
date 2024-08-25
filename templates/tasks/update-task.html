@@ -12,10 +12,10 @@
         {% csrf_token %}
         
         <label for="title">Task Title: </label>
-        <input type="text" id="title" name="title" value="{{ task.title }}"/>
+        <input type="text" id="title" name="title" value="{{ task.title }}" required/>
         
         <label for="description">Task Description: </label>
-        <input type="text" id="description" name="description" value="{{ task.description }}"/>
+        <input type="text" id="description" name="description" value="{{ task.description }}" required/>
 
         <label for="is_completed">Completed:</label>
         <input type="checkbox" id="is_completed" name="is_completed" {% if task.status %} checked {% endif %}>
