@@ -44,9 +44,26 @@
       <!-- <p>{{ task.description }}</p> -->
       <a href="{% url 'view-task' task.id %}" class="button">View Task</a>
       <a href="{% url 'update-task' task.id %}" class="button">Update Task</a>
-      <a href="{% url 'delete-task' task.id %}" class="button">Delete Task</a>
+      <a href="{% url 'delete-task' task.id %}?page={{ tasks.number }}" class="button">Delete Task</a>
       <br><br><hr>
       {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if tasks.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            
+            <span class="current">
+                Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
+            </span>
+            
+            {% if tasks.has_next %}
+                <a href="?page={{ tasks.next_page_number }}">next</a>
+                <a href="?page={{ tasks.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
     </div>
     <div>
       <br><br>
