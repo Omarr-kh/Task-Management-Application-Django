@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.urls import reverse
 from .models import Task
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -9,8 +10,12 @@ from django.contrib.auth.models import User
 def home(request):
     user = User.objects.last()
     tasks = Task.objects.filter(user=user)
+    paginator = Paginator(tasks, 5)
+    # Get the page number from the query string
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "tasks": tasks
+        "tasks": page_obj
     }
     return render(request, 'home.html', context)
 
@@ -55,7 +60,7 @@ def update_task(request, task_id):
         task.status = request.POST.get('is_completed') == 'on'
         task.save()
 
-        return redirect('home')
+        return redirect(reverse('view-task', args=[task.id]))
     return render(request, 'update-task.html', context)
 
 
@@ -63,4 +68,7 @@ def delete_task(request, task_id):
     task = Task.objects.get(id=task_id)
     task.delete()
 
-    return redirect('home')
+    current_page = request.GET.get('page', 1)
+
+    # Redirect back to the same page
+    return redirect(f'/tasks?page={current_page}')
