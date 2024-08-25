@@ -4,15 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tasks</title>
+    <style>
+      .header {
+        text-align: center;
+      }
+      .task_title {
+        font-size: 22px;
+      }
+    </style>
   </head>
   <body>
+    <header>
+      <h1 class="header">All Tasks</h1>
+    </header>
     <div>
+      <br><hr>
       {% for task in tasks %}
-      <h3>{{ task.title }}</h3>
-      <p>{{ task.description }}</p>
+      <p class="task_title"><strong>Title:</strong> {{ task.title }}</p>
+      <!-- <p>{{ task.description }}</p> -->
+      <a href="{% url 'view-task' task.id %}">View Task</a>
+      <br><br><hr>
       {% endfor %}
     </div>
     <div>
+      <br><br>
       <a href="{% url 'add-task' %}">Add New Task</a>
     </div>
   </body>
