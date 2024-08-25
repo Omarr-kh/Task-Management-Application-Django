@@ -95,6 +95,7 @@ def delete_task(request, task_id):
     task.delete()
 
     current_page = request.GET.get('page', 1)
+    current_status = request.GET.get('status', 'all')
 
     # Redirect back to the same page
-    return redirect(f'/tasks?page={current_page}')
+    return redirect(f'/tasks?page={current_page}&status={current_status}')
