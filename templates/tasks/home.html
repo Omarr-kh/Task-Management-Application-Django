@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,9 +9,11 @@
       .header {
         text-align: center;
       }
+
       .task_title {
         font-size: 22px;
       }
+
       .button {
         padding: 6px 14px;
         font-weight: bold;
@@ -33,51 +36,56 @@
       }
     </style>
   </head>
+
   <body>
     <header>
       <h1 class="header">All Tasks</h1>
     </header>
 
     <form method="get" action="">
-        <label for="status">Filter by status:</label>
-        <select name="status" id="status" onchange="this.form.submit()">
-            <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Tasks</option>
-            <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
-            <option value="not_completed" {% if status_filter == 'not_completed' %}selected{% endif %}>Not Completed</option>
-        </select>
+      <label for="status">Filter by status:</label>
+      <select name="status" id="status" onchange="this.form.submit()">
+        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Tasks</option>
+        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+        <option value="not_completed" {% if status_filter == 'not_completed' %}selected{% endif %}>Not Completed</option>
+      </select>
     </form>
 
     <div>
-      <br><hr>
+      <br>
+      <hr>
       {% for task in tasks %}
       <p class="task_title"><strong>Title:</strong> {{ task.title }}</p>
       <!-- <p>{{ task.description }}</p> -->
       <a href="{% url 'view-task' task.id %}" class="button">View Task</a>
       <a href="{% url 'update-task' task.id %}" class="button">Update Task</a>
-      <a href="{% url 'delete-task' task.id %}?page={{ tasks.number }}" class="button">Delete Task</a>
-      <br><br><hr>
+      <a href="{% url 'delete-task' task.id %}?page={{ tasks.number }}&status={{ status_filter }}" class="button">Delete
+        Task</a>
+      <br><br>
+      <hr>
       {% endfor %}
     </div>
     <div class="pagination">
-        <span class="step-links">
-            {% if tasks.has_previous %}
-                <a href="?page=1&status={{ status_filter }}">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}">previous</a>
-            {% endif %}
-            
-            <span class="current">
-                Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
-            </span>
-            
-            {% if tasks.has_next %}
-                <a href="?page={{ tasks.next_page_number }}&status={{ status_filter }}">next</a>
-                <a href="?page={{ tasks.paginator.num_pages }}&status={{ status_filter }}">last &raquo;</a>
-            {% endif %}
+      <span class="step-links">
+        {% if tasks.has_previous %}
+        <a href="?page=1&status={{ status_filter }}">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
         </span>
+
+        {% if tasks.has_next %}
+        <a href="?page={{ tasks.next_page_number }}&status={{ status_filter }}">next</a>
+        <a href="?page={{ tasks.paginator.num_pages }}&status={{ status_filter }}">last &raquo;</a>
+        {% endif %}
+      </span>
     </div>
     <div>
       <br><br>
       <a href="{% url 'add-task' %}" class="button button-add">Add New Task</a>
     </div>
   </body>
+
 </html>
