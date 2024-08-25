@@ -6,6 +6,9 @@
     <title>Tasks</title>
 </head>
 <body>
-    <h1>Tasks</h1>
+    {% for task in tasks %}
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+    {% endfor %}
 </body>
 </html>
